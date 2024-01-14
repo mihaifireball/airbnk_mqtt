@@ -12,6 +12,7 @@ Supported devices (using an ESP32 device as a Wifi-to-Bluetooth bridge):
 - M510 (tested)
 - M530 (tested)
 - M531 (tested)
+- M532 (tested)
 
 # Prerequisites:
 
@@ -50,9 +51,10 @@ Once you press submit and confirm, the Integration will be added, and the Airbnk
 
 # Note:
 
-**The locks are added using Cover entities instead of Lock entities**. This choice is due to the fact that Lock entities only provide one available command (Unlock or Lock), depending on the status of the entity. But, since it can be operated also manually, it is impossible to have an actual knowledge of the real status of the lock. Moreover, most users could desire to give double Lock or Unlock commands. 
+**The locks are added using Lock entities**. 
+In order to have an updated status of the lock even when it is operated manually, you have to enable Electronic assistance turning in WeHere app:
+WeHere app -> Settings -> Configuration lock -> Electric assistance turning.
 
-As a consequence, the Cover entity is used being deemed more suitable, because it allows to have both commands always available.
 
 # To-do list:
 
