@@ -89,17 +89,20 @@ class AirbnkLock(LockEntity):
         return self._device.device_info
 
     @property
-    def is_unlocking(self):
+    def is_unlocking(self) -> bool | None:
         """Return if lock is opening."""
         return False
 
     @property
-    def is_locking(self):
-        """Return if lock is closing."""
-        return False
+    def is_locking(self) -> bool | None:
+        """Return if lock is operating."""
+        if self._device.curr_state == LOCK_STATE_OPERATING:
+            return True
+        else:
+            return False
 
     @property
-    def is_jammed(self):
+    def is_jammed(self) -> bool | None:
         """Return if the lock is jammed or not."""
         if self._device.curr_state == LOCK_STATE_JAMMED:
             return True
@@ -107,7 +110,7 @@ class AirbnkLock(LockEntity):
             return False
 
     @property
-    def is_locked(self):
+    def is_locked(self) -> bool | None:
         """Return if the lock is locked or not."""
         if self._device.curr_state == LOCK_STATE_LOCKED:
             return True
