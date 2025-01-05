@@ -348,14 +348,20 @@ class CustomMqttLockDevice:
 
         return
 
+#    def calculate_battery_percentage(self, voltage):
+#        voltages = self._lockConfig[CONF_VOLTAGE_THRESHOLDS]
+#        perc = 0
+#        if voltage >= voltages[2]:
+#            perc = 100
+#        elif voltage >= voltages[1]:
+#            perc = 66.6 + 33.3 * (voltage - voltages[1]) / (voltages[2] - voltages[1])
+#        else:
+#            perc = 33.3 + 33.3 * (voltage - voltages[0]) / (voltages[1] - voltages[0])
+#        perc = max(perc, 0)
+#        return round(perc, 1)
+        
     def calculate_battery_percentage(self, voltage):
         voltages = self._lockConfig[CONF_VOLTAGE_THRESHOLDS]
         perc = 0
-        if voltage >= voltages[2]:
-            perc = 100
-        elif voltage >= voltages[1]:
-            perc = 66.6 + 33.3 * (voltage - voltages[1]) / (voltages[2] - voltages[1])
-        else:
-            perc = 33.3 + 33.3 * (voltage - voltages[0]) / (voltages[1] - voltages[0])
-        perc = max(perc, 0)
+        perc = ( 1 - ( 9.52 - voltage ) / 1.48) * 100
         return round(perc, 1)
