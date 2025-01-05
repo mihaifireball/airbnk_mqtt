@@ -5,7 +5,7 @@ import logging
 import voluptuous as vol
 
 from homeassistant.config_entries import SOURCE_IMPORT, ConfigEntry
-from homeassistant.helpers.typing import HomeAssistantType
+from homeassistant.core import HomeAssistant
 from homeassistant.const import CONF_TOKEN, SERVICE_RELOAD
 
 from .airbnk_api import AirbnkApi
@@ -35,7 +35,7 @@ SIGNAL_UPDATE_ENTITY = "airbnk_update"
 
 MIN_TIME_BETWEEN_UPDATES = datetime.timedelta(seconds=15)
 
-COMPONENT_TYPES = ["binary_sensor", "cover", "sensor"]
+COMPONENT_TYPES = ["binary_sensor", "lock", "sensor"]
 
 CONFIG_SCHEMA = vol.Schema(vol.All({DOMAIN: vol.Schema({})}), extra=vol.ALLOW_EXTRA)
 
@@ -112,7 +112,7 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
     return True
 
 
-async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry):
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Establish connection with Airbnk."""
 
     device_configs = entry.data[CONF_DEVICE_CONFIGS]
@@ -130,10 +130,7 @@ async def async_setup_entry(hass: HomeAssistantType, entry: ConfigEntry):
 
     hass.data[DOMAIN] = {AIRBNK_DEVICES: lock_devices}
 
-    for component in COMPONENT_TYPES:
-        hass.async_create_task(
-            hass.config_entries.async_forward_entry_setup(entry, component)
-        )
+    await hass.config_entries.async_forward_entry_setups(entry, COMPONENT_TYPES)
     return True
 
 

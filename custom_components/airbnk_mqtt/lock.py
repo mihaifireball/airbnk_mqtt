@@ -61,12 +61,6 @@ class AirbnkLock(LockEntity):
         """Return if entity is available or not."""
         return self._device.is_available
 
-#    @property
-#    def supported_features(self):
-#        """Flag supported features."""
-#        supported_features = SUPPORT_OPEN
-#        return supported_features
-
     @property
     def unique_id(self):
         """Return a unique ID."""

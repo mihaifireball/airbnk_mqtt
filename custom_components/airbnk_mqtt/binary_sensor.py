@@ -4,9 +4,11 @@ import logging
 
 from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
+    BinarySensorDeviceClass,
 )
+
 from homeassistant.const import (
-    DEVICE_CLASS_BATTERY,
+    ATTR_BATTERY_LEVEL,
 )
 
 from .const import (
@@ -84,7 +86,7 @@ class AirbnkBinarySensor(BinarySensorEntity):
     @property
     def device_class(self):
         """Return the class of this device."""
-        return DEVICE_CLASS_BATTERY
+        return BinarySensorDeviceClass.BATTERY
 
     @property
     def icon(self):
